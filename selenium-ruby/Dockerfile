@@ -2,6 +2,9 @@
 FROM ubuntu:14.04
 MAINTAINER kazuya.takizawa
 
+# debian aptitude dialog off
+ENV DEBIAN_FRONTEND noninteractive
+
 # (1) ....................................................
 RUN apt-get update && \
   apt-get install -y aptitude && \
