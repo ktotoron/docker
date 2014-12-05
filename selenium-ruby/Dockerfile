@@ -23,6 +23,10 @@ echo '日本語表示用フォントinstall' && \
   apt-get install -y libfreetype6 && \
   apt-get install -y libfontconfig
 
+# selenium user追加
+RUN useradd -m -s /bin/bash selenium && \
+  echo 'selenium:selenium' | chpasswd  && \
+  echo 'selenium ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/selenium
 
 # ssh=22
 EXPOSE 22
