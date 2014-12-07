@@ -97,13 +97,13 @@ echo '==================================================' && \
   apt-get update && \
   apt-get install -y google-chrome-stable
 
-# echo '==================================================' && \
-# echo 'seleniumのChromeDriver_install' && \
-# echo '==================================================' && \
-#   mkdir /opt/chromedriver_linux64 && \
-#   wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
-#   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
-#   chmod +x /opt/chromedriver_linux64/chromedriver
+RUN echo '==================================================' && \
+echo 'seleniumのChromeDriver_install' && \
+echo '==================================================' && \
+  mkdir /opt/chromedriver_linux64 && \
+  wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
+  unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
+  chmod +x /opt/chromedriver_linux64/chromedriver
 
 
 # ssh=22
