@@ -64,21 +64,23 @@ echo '==================================================' && \
 echo 'firefoxのインストール' && \
 echo '==================================================' && \
   aptitude install -y firefox && \
-  aptitude install -y firefox-locale-ja && \
-echo '==================================================' && \
-echo 'chromeのインストール' && \
-echo '==================================================' && \
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
-  sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
-  apt-get update && \
-  apt-get install google-chrome-stable && \
-echo '==================================================' && \
-echo 'seleniumのChromeDriver_install' && \
-echo '==================================================' && \
-  mkdir /opt/chromedriver_linux64 && \
-  wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
-  unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
-  chmod +x /opt/chromedriver_linux64/chromedriver
+  aptitude install -y firefox-locale-ja 
+
+# # chromeのインストール
+# RUN echo '==================================================' && \
+# echo 'chromeのインストール' && \
+# echo '==================================================' && \
+#   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
+#   sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
+#   apt-get update && \
+#   apt-get install google-chrome-stable && \
+# echo '==================================================' && \
+# echo 'seleniumのChromeDriver_install' && \
+# echo '==================================================' && \
+#   mkdir /opt/chromedriver_linux64 && \
+#   wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
+#   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
+#   chmod +x /opt/chromedriver_linux64/chromedriver
 
 
 # ssh=22
