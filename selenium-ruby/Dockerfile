@@ -118,6 +118,9 @@ RUN echo '====================install_rbenv====================' && \
 
 # rootで実行しなくてはけないため
 USER root
+
+RUN echo 'eval "$(rbenv init -)"' >> /home/selenium/.bash_profile
+
 # ssh=22
 EXPOSE 22
 # supervisor起動
