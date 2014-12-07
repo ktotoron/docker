@@ -44,25 +44,25 @@ echo '==================================================' && \
 # work directory
 WORKDIR /usr/src
 
-# localeの環境変数設定
+# locale for japanese
+RUN echo '====================locale追加処理====================' && \
+  aptitude install -y locales && \
+  locale-gen ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 ENV LC_CTYPE ja_JP.UTF-8
 ENV LC_MESSAGES ja_JP.UTF-8
+RUN echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
+  locale-gen && \
+  update-locale LANG=ja_JP.UTF-8
 
-# locale設定
-RUN aptitude install -y locales && \
-  locale-gen ja_JP.UTF-8 && \
-echo '====================locale追加====================' && \
+RUN echo '====================locale追加設定====================' && \
   echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
   echo 'export LC_ALL=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LC_CTYPE=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LC_MESSAGES=ja_JP.UTF-8' >> /etc/profile && \
-  echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
-  locale-gen && \
-  update-locale LANG=ja_JP.UTF-8 && \
 echo '====================install_font====================' && \
   aptitude install -y  ttf-japanese-gothic && \
   aptitude install -y  ttf-japanese-mincho
@@ -88,6 +88,7 @@ echo 'firefoxのインストール' && \
 echo '==================================================' && \
   aptitude install -y firefox && \
   aptitude install -y firefox-locale-ja 
+
 
 # # chromeのインストール
 # RUN echo '==================================================' && \
