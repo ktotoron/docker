@@ -45,12 +45,9 @@ echo '==================================================' && \
 WORKDIR /usr/src
 
 # selenium user追加
-RUN echo '==================================================' && \
-echo 'supervisor_install' && \ 
+RUN aptitude install -y supervisor && \
 echo '==================================================' && \
-  aptitude install -y supervisor && \
-echo '==================================================' && \
-echo "seleniumuserの追加とsudo権限の設定, SSHの設定" && \
+echo 'seleniumuserの追加とsudo権限の設定, SSHの設定' && \
 echo '==================================================' && \
   useradd -m -s /bin/bash selenium && \
   echo 'selenium:selenium' | chpasswd  && \
