@@ -44,6 +44,23 @@ echo '==================================================' && \
 # work directory
 WORKDIR /usr/src
 
+# locale設定
+RUN aptitude install -y locales && \
+  locale-gen ja_JP.UTF-8 && \
+echo '====================locale追加====================' && \
+  echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
+  echo 'export LC_ALL=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LC_CTYPE=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LC_MESSAGES=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
+  source /etc/profile && \
+  locale-gen && \
+  update-locale LANG=ja_JP.UTF-8 && \
+echo '====================install_font====================' && \
+  aptitude install -y  ttf-japanese-gothic && \
+  aptitude install -y  ttf-japanese-mincho
+
 # selenium user追加
 RUN aptitude install -y supervisor && \
 echo '==================================================' && \
@@ -52,14 +69,14 @@ echo '==================================================' && \
   useradd -m -s /bin/bash selenium && \
   mkdir -p /home/selenium/.ssh && \
   echo 'selenium:selenium' | chpasswd  && \
-  echo 'selenium ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/selenium && \
-  echo 'Host github.com' > /home/selenium/.ssh/known_hosts && \
-  echo '  StrictHostKeyChecking no' > /home/selenium/.ssh/known_hosts && \
+  echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
+  echo 'Host github.com' >> /home/selenium/.ssh/known_hosts && \
+  echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/known_hosts && \
 echo '==================================================' && \
 echo 'xvfbのインストール' && \
 echo '==================================================' && \
   aptitude install -y xvfb  && \
-  echo 'export DISPLAY=:1' > ~/.bash_profile && \
+  echo 'export DISPLAY=:1' >> /home/selenium/.bash_profile && \
 echo '==================================================' && \
 echo 'firefoxのインストール' && \
 echo '==================================================' && \
@@ -73,7 +90,7 @@ echo '==================================================' && \
 #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
 #   sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
 #   apt-get update && \
-#   apt-get install google-chrome-stable && \
+#   apt-get install -y google-chrome-stable && \
 # echo '==================================================' && \
 # echo 'seleniumのChromeDriver_install' && \
 # echo '==================================================' && \
