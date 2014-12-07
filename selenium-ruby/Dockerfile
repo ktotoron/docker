@@ -116,7 +116,8 @@ RUN echo '====================install_rbenv====================' && \
   ~/.rbenv/bin/rbenv rehash && \ 
   ~/.rbenv/bin/rbenv global 2.1.2
 
-
+# rootで実行しなくてはけないため
+USER root
 # ssh=22
 EXPOSE 22
 # supervisor起動
