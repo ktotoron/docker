@@ -74,7 +74,7 @@ echo '==================================================' && \
 echo '==================================================' && \
 echo 'seleniumのChromeDriver_install' && \
 echo '==================================================' && \
-  mkdir /opt/chromedriver_linux64 &&
+  mkdir /opt/chromedriver_linux64 && \
   wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
   chmod +x /opt/chromedriver_linux64/chromedriver
