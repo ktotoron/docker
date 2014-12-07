@@ -88,7 +88,7 @@ echo '==================================================' && \
 echo 'firefoxのインストール' && \
 echo '==================================================' && \
   aptitude install -y firefox && \
-  aptitude install -y firefox-locale-ja 
+  aptitude install -y firefox-locale-ja && \
 echo '==================================================' && \
 echo 'chromeのインストール' && \
 echo '==================================================' && \
