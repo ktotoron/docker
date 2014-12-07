@@ -68,7 +68,7 @@ echo '====================install_font====================' && \
   aptitude install -y  ttf-japanese-gothic && \
   aptitude install -y  ttf-japanese-mincho
 
-# selenium user追加
+# selenium user追加とbrowserのインストール
 RUN aptitude install -y supervisor && \
 echo '==================================================' && \
 echo 'seleniumuserの追加とsudo権限の設定, SSHの設定' && \
@@ -89,16 +89,14 @@ echo 'firefoxのインストール' && \
 echo '==================================================' && \
   aptitude install -y firefox && \
   aptitude install -y firefox-locale-ja 
+echo '==================================================' && \
+echo 'chromeのインストール' && \
+echo '==================================================' && \
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
+  sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
+  apt-get update && \
+  apt-get install -y google-chrome-stable
 
-
-# # chromeのインストール
-# RUN echo '==================================================' && \
-# echo 'chromeのインストール' && \
-# echo '==================================================' && \
-#   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
-#   sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
-#   apt-get update && \
-#   apt-get install -y google-chrome-stable && \
 # echo '==================================================' && \
 # echo 'seleniumのChromeDriver_install' && \
 # echo '==================================================' && \
