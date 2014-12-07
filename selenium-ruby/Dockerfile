@@ -61,7 +61,6 @@ echo '====================locale追加====================' && \
   echo 'export LC_CTYPE=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LC_MESSAGES=ja_JP.UTF-8' >> /etc/profile && \
   echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
-  source /etc/profile && \
   locale-gen && \
   update-locale LANG=ja_JP.UTF-8 && \
 echo '====================install_font====================' && \
