@@ -58,6 +58,7 @@ RUN echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
   update-locale LANG=ja_JP.UTF-8
 
 RUN echo '====================locale追加設定====================' && \
+  echo '# locale設定' >> /etc/profile && \
   echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
   echo 'export LC_ALL=ja_JP.UTF-8' >> /etc/profile && \
