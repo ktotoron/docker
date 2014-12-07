@@ -50,6 +50,7 @@ echo '==================================================' && \
 echo 'seleniumuserの追加とsudo権限の設定, SSHの設定' && \
 echo '==================================================' && \
   useradd -m -s /bin/bash selenium && \
+  mkdir -p /home/selenium/.ssh && \
   echo 'selenium:selenium' | chpasswd  && \
   echo 'selenium ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/selenium && \
   echo 'Host github.com' > /home/selenium/.ssh/known_hosts && \
