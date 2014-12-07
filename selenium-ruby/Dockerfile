@@ -44,6 +44,13 @@ echo '==================================================' && \
 # work directory
 WORKDIR /usr/src
 
+# localeの環境変数設定
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+ENV LC_MESSAGES ja_JP.UTF-8
+
 # locale設定
 RUN aptitude install -y locales && \
   locale-gen ja_JP.UTF-8 && \
