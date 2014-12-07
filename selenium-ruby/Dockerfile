@@ -105,6 +105,17 @@ echo '==================================================' && \
   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
   chmod +x /opt/chromedriver_linux64/chromedriver
 
+# seleniumでinstall rbenv
+USER selenium
+
+RUN echo '====================install_rbenv====================' && \
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
+  git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+  eval "$(~/.rbenv/bin/rbenv init -)" && \
+  ~/.rbenv/bin/rbenv install 2.1.2 && \ 
+  ~/.rbenv/bin/rbenv rehash && \ 
+  ~/.rbenv/bin/rbenv global 2.1.2
+
 
 # ssh=22
 EXPOSE 22
