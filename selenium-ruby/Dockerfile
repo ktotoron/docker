@@ -110,7 +110,7 @@ USER selenium
 
 RUN echo '====================install_rbenv====================' && \
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
-  git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
   eval "$(~/.rbenv/bin/rbenv init -)" && \
   ~/.rbenv/bin/rbenv install 2.1.2 && \ 
   ~/.rbenv/bin/rbenv rehash && \ 
