@@ -120,7 +120,7 @@ RUN echo '====================install_rbenv====================' && \
 USER root
 
 RUN echo '====================rbenvの設定追加====================' && \
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile && \
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/selenium/.bash_profile && \
 echo 'eval "$(rbenv init -)"' >> /home/selenium/.bash_profile
 
 # ssh=22
