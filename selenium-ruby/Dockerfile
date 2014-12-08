@@ -82,13 +82,13 @@ echo '==================================================' && \
 echo '==================================================' && \
 echo 'xvfbのインストール' && \
 echo '==================================================' && \
-  aptitude install -y xvfb  && \
+  apt-get install -y xvfb  && \
   echo 'export DISPLAY=:1' >> /home/selenium/.bash_profile && \
 echo '==================================================' && \
 echo 'firefoxのインストール' && \
 echo '==================================================' && \
-  aptitude install -y firefox && \
-  aptitude install -y firefox-locale-ja && \
+  apt-get install -y firefox && \
+  apt-get install -y firefox-locale-ja && \
 echo '==================================================' && \
 echo 'chromeのインストール' && \
 echo '==================================================' && \
