@@ -124,7 +124,7 @@ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/selenium/.bash_profile && \
 echo 'eval "$(rbenv init -)"' >> /home/selenium/.bash_profile
 
 # ssh=22
-EXPOSE 22
+EXPOSE 22 80 8080
 # supervisor起動
 ADD etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
