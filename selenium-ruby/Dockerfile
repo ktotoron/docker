@@ -116,7 +116,7 @@ echo 'set_[~/.zshrc.antigen]====================' && \
   echo '# $HOME/.zshrc.antigen'                            >> ~/.zshrc.antigen && \
   echo '# load antigen'                                    >> ~/.zshrc.antigen && \
   echo 'source ~/.zsh_ext/antigen.git/antigen.zsh'         >> ~/.zshrc.antigen && \
-  echo '# Load the oh-my-zsh's library.'                   >> ~/.zshrc.antigen && \
+  echo '# Load the oh-my-zshs library.'                   >> ~/.zshrc.antigen && \
   echo 'antigen use oh-my-zsh'                             >> ~/.zshrc.antigen && \
   echo '# Bundles from the default repo'                   >> ~/.zshrc.antigen && \
   echo 'antigen-bundle git'                                >> ~/.zshrc.antigen && \
