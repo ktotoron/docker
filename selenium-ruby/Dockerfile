@@ -12,6 +12,8 @@ RUN apt-get update && \
   apt-get install -y tree && \
   apt-get install -y vim && \
   apt-get install -y curl && \
+echo 'install_zsh====================' && \
+  apt-get install -y zsh && \
 echo '==================================================' && \
 echo 'install_basic_server_packages' && \
 echo '==================================================' && \
@@ -73,7 +75,7 @@ RUN aptitude install -y supervisor && \
 echo '==================================================' && \
 echo 'seleniumuserの追加とsudo権限の設定, SSHの設定' && \
 echo '==================================================' && \
-  useradd -m -s /bin/bash selenium && \
+  useradd -m -s /usr/bin/zsh selenium && \
   mkdir -p /home/selenium/.ssh && \
   echo 'selenium:selenium' | chpasswd  && \
   echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
@@ -108,7 +110,32 @@ echo '==================================================' && \
 # seleniumでinstall rbenv
 USER selenium
 
-RUN echo '====================install_rbenv====================' && \
+RUN echo 'install_antigen_for_zsh====================' && \
+  git clone git@github.com:zsh-users/antigen.git ~/.zsh_ext/antigen.git && \
+echo 'set_[~/.zshrc.antigen]====================' && \
+  echo '# $HOME/.zshrc.antigen'                            >> ~/.zshrc.antigen && \
+  echo '# load antigen'                                    >> ~/.zshrc.antigen && \
+  echo 'source ~/.zsh_ext/antigen.git/antigen.zsh'         >> ~/.zshrc.antigen && \
+  echo '# Load the oh-my-zsh's library.'                   >> ~/.zshrc.antigen && \
+  echo 'antigen use oh-my-zsh'                             >> ~/.zshrc.antigen && \
+  echo '# Bundles from the default repo'                   >> ~/.zshrc.antigen && \
+  echo 'antigen-bundle git'                                >> ~/.zshrc.antigen && \
+  echo 'antigen-bundle autojump'                           >> ~/.zshrc.antigen && \
+  echo 'antigen-bundle zsh-users/zsh-syntax-highlighting'  >> ~/.zshrc.antigen && \
+  echo 'antigen-bundle zsh-users/zsh-completions'          >> ~/.zshrc.antigen && \
+  echo 'antigen-bundle tetsujin/zsh-function-mysql'        >> ~/.zshrc.antigen && \
+  echo 'antigen bundle command-not-found'                  >> ~/.zshrc.antigen && \
+  echo '# Syntax highlighting bundle.'                     >> ~/.zshrc.antigen && \
+  echo 'antigen bundle zsh-users/zsh-syntax-highlighting'  >> ~/.zshrc.antigen && \
+  echo '# Load the theme.'                                 >> ~/.zshrc.antigen && \
+  echo 'antigen-theme robbyrussell'                        >> ~/.zshrc.antigen && \
+  echo 'antigen-apply'                                     >> ~/.zshrc.antigen && \
+echo 'set_[~/.zshrc]====================' && \
+  echo '# $HOME/.zshrc'                        >> ~/.zshrc.antigen && \
+  echo 'source ~/.bash_profile'                >> ~/.zshrc.antigen && \
+  echo 'source ~/.zshrc.antigen'               >> ~/.zshrc.antigen && \
+  echo '# rbenv'                               >> ~/.zshrc.antigen && \
+echo '====================install_rbenv====================' && \
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
   git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
   eval "$(~/.rbenv/bin/rbenv init -)" && \
@@ -120,8 +147,8 @@ RUN echo '====================install_rbenv====================' && \
 USER root
 
 RUN echo '====================rbenvの設定追加====================' && \
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/selenium/.bash_profile && \
-echo 'eval "$(rbenv init -)"' >> /home/selenium/.bash_profile
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"'   >> /home/selenium/.bash_profile && \
+echo 'eval "$(rbenv init -)"'                 >> /home/selenium/.bash_profile
 
 # ssh=22
 EXPOSE 22 80 8080
