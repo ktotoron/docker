@@ -81,9 +81,9 @@ RUN echo 'seleniumuserの追加とsudo権限の設定, SSHの設定=============
   echo 'selenium:selenium' | chpasswd  && \
   echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
   echo 'Host github.com' >> /home/selenium/.ssh/config && \
-  echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/config 
-# echo 'change selenium_user shell====================' && \
-#   chsh -s /usr/bin/zsh selenium 
+  echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/config && \
+echo 'change selenium_user shell====================' && \
+  chsh -s /usr/bin/zsh selenium 
 
 # seleniumでinstall rbenv
 USER selenium
