@@ -14,9 +14,7 @@ RUN apt-get update && \
   apt-get install -y curl && \
 echo 'install_zsh====================' && \
   apt-get install -y zsh && \
-echo '==================================================' && \
-echo 'install_basic_server_packages' && \
-echo '==================================================' && \
+echo 'install_basic_server_packages====================' && \
   apt-get install -y build-essential && \
   apt-get install -y zip && \
   apt-get install -y autoconf && \
@@ -37,9 +35,7 @@ echo '==================================================' && \
   mkdir /var/run/sshd && \
   ssh-keygen -A && \
   sed -ie 's/^\(session \+required \+pam_loginuid.so\)/#\1/' /etc/pam.d/sshd && \
-echo '==================================================' && \
-echo '日本語表示用フォントinstall' && \
-echo '==================================================' && \
+echo '日本語表示用フォントinstall====================' && \
   apt-get install -y libfreetype6 && \
   apt-get install -y libfontconfig
 
@@ -72,36 +68,26 @@ echo '====================install_font====================' && \
 
 # selenium user追加とbrowserのインストール
 RUN aptitude install -y supervisor && \
-echo '==================================================' && \
-echo 'seleniumuserの追加とsudo権限の設定, SSHの設定' && \
-echo '==================================================' && \
-  useradd -m -s /usr/bin/zsh selenium && \
+echo 'seleniumuserの追加とsudo権限の設定, SSHの設定====================' && \
+  useradd -m -s /bin/bash selenium && \
   mkdir -p /home/selenium/.ssh && \
   echo 'selenium:selenium' | chpasswd  && \
   echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
   echo 'Host github.com' >> /home/selenium/.ssh/known_hosts && \
   echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/known_hosts && \
-echo '==================================================' && \
-echo 'xvfbのインストール' && \
-echo '==================================================' && \
+echo 'change selenium_user shell====================' && \
+  chsh -s /usr/bin/zsh selenium && \
+echo 'xvfbのインストール====================' && \
   apt-get install -y xvfb  && \
-  echo 'export DISPLAY=:1' >> /home/selenium/.bash_profile && \
-echo '==================================================' && \
-echo 'firefoxのインストール' && \
-echo '==================================================' && \
+echo 'firefoxのインストール====================' && \
   apt-get install -y firefox && \
   apt-get install -y firefox-locale-ja && \
-echo '==================================================' && \
-echo 'chromeのインストール' && \
-echo '==================================================' && \
+echo 'chromeのインストール====================' && \
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
   sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
   apt-get update && \
-  apt-get install --force-yes -y google-chrome-stable
-
-RUN echo '==================================================' && \
-echo 'seleniumのChromeDriver_install' && \
-echo '==================================================' && \
+  apt-get install --force-yes -y google-chrome-stable && \
+echo 'seleniumのChromeDriver_install====================' && \
   mkdir /opt/chromedriver_linux64 && \
   wget -O /usr/src/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  && \
   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
@@ -109,6 +95,21 @@ echo '==================================================' && \
 
 # seleniumでinstall rbenv
 USER selenium
+
+
+
+
+
+RUN echo 'install_rbenv====================' && \
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+  eval "$(~/.rbenv/bin/rbenv init -)" && \
+  ~/.rbenv/bin/rbenv install 2.1.2 && \ 
+  ~/.rbenv/bin/rbenv rehash && \ 
+  ~/.rbenv/bin/rbenv global 2.1.2
+
+# rootで実行しなくてはけないため
+USER root
 
 RUN echo 'install_antigen_for_zsh====================' && \
   git clone git://github.com/zsh-users/antigen.git ~/.zsh_ext/antigen.git && \
@@ -131,24 +132,14 @@ echo 'set_[~/.zshrc.antigen]====================' && \
   echo 'antigen-theme robbyrussell'                        >> ~/.zshrc.antigen && \
   echo 'antigen-apply'                                     >> ~/.zshrc.antigen && \
 echo 'set_[~/.zshrc]====================' && \
-  echo '# $HOME/.zshrc'                        >> ~/.zshrc.antigen && \
-  echo 'source ~/.bash_profile'                >> ~/.zshrc.antigen && \
-  echo 'source ~/.zshrc.antigen'               >> ~/.zshrc.antigen && \
-  echo '# rbenv'                               >> ~/.zshrc.antigen && \
-echo '====================install_rbenv====================' && \
-  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
-  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
-  eval "$(~/.rbenv/bin/rbenv init -)" && \
-  ~/.rbenv/bin/rbenv install 2.1.2 && \ 
-  ~/.rbenv/bin/rbenv rehash && \ 
-  ~/.rbenv/bin/rbenv global 2.1.2
-
-# rootで実行しなくてはけないため
-USER root
-
-RUN echo '====================rbenvの設定追加====================' && \
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"'   >> /home/selenium/.bash_profile && \
-echo 'eval "$(rbenv init -)"'                 >> /home/selenium/.bash_profile
+  echo '# $HOME/.zshrc'                        >> ~/.zshrc && \
+  echo 'source ~/.zshrc.antigen'               >> ~/.zshrc && \
+  echo '# Xvfb'                                >> ~/.zshrc && \
+  echo 'export DISPLAY=:1'                     >> ~/.zshrc && \
+  echo '# rbenv'                               >> ~/.zshrc && \
+echo 'rbenvの設定追加====================' && \
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"'  >> ~/.zshrc && \ 
+  echo 'eval "$(rbenv init -)"'                >> ~/.zshrc
 
 # ssh=22
 EXPOSE 22 80 8080
