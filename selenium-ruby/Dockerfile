@@ -96,9 +96,6 @@ RUN echo 'install_rbenv====================' && \
   ~/.rbenv/bin/rbenv rehash && \ 
   ~/.rbenv/bin/rbenv global 2.1.2
 
-# rootで実行しなくてはけないため
-USER root
-
 RUN echo 'install_antigen_for_zsh====================' && \
   git clone git://github.com/zsh-users/antigen.git ~/.zsh_ext/antigen.git && \
 echo 'set_[~/.zshrc.antigen]====================' && \
@@ -127,8 +124,11 @@ echo 'set_[~/.zshrc]====================' && \
   echo '# rbenv'                               >> ~/.zshrc && \
 echo 'rbenvの設定追加====================' && \
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"'  >> ~/.zshrc && \ 
-  echo 'eval "$(rbenv init -)"'                >> ~/.zshrc && \
-echo 'locale追加設定====================' && \
+  echo 'eval "$(rbenv init -)"'                >> ~/.zshrc 
+
+# rootで実行しなくてはけないため
+USER root
+RUN echo 'locale追加設定====================' && \
   echo '# locale設定' >> /etc/profile && \
   echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
   echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
