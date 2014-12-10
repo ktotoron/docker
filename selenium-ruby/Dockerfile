@@ -37,46 +37,14 @@ echo '==================================================' && \
   sed -ie 's/^\(session \+required \+pam_loginuid.so\)/#\1/' /etc/pam.d/sshd && \
 echo '日本語表示用フォントinstall====================' && \
   apt-get install -y libfreetype6 && \
-  apt-get install -y libfontconfig
-
-# work directory
-WORKDIR /usr/src
-
-# locale for japanese
-RUN echo '====================locale追加処理====================' && \
-  aptitude install -y locales && \
-  locale-gen ja_JP.UTF-8
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP:ja
-ENV LC_ALL ja_JP.UTF-8
-ENV LC_CTYPE ja_JP.UTF-8
-ENV LC_MESSAGES ja_JP.UTF-8
-RUN echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
-  locale-gen && \
-  update-locale LANG=ja_JP.UTF-8
-
-RUN echo '====================locale追加設定====================' && \
-  echo '# locale設定' >> /etc/profile && \
-  echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
-  echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
-  echo 'export LC_ALL=ja_JP.UTF-8' >> /etc/profile && \
-  echo 'export LC_CTYPE=ja_JP.UTF-8' >> /etc/profile && \
-  echo 'export LC_MESSAGES=ja_JP.UTF-8' >> /etc/profile && \
-echo '====================install_font====================' && \
+  apt-get install -y libfontconfig && \
+echo 'install_font====================' && \
   aptitude install -y  ttf-japanese-gothic && \
-  aptitude install -y  ttf-japanese-mincho
-
-# selenium user追加とbrowserのインストール
-RUN aptitude install -y supervisor && \
-echo 'seleniumuserの追加とsudo権限の設定, SSHの設定====================' && \
-  useradd -m -s /bin/bash selenium && \
-  mkdir -p /home/selenium/.ssh && \
-  echo 'selenium:selenium' | chpasswd  && \
-  echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
-  echo 'Host github.com' >> /home/selenium/.ssh/known_hosts && \
-  echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/known_hosts && \
-echo 'change selenium_user shell====================' && \
-  chsh -s /usr/bin/zsh selenium && \
+  aptitude install -y  ttf-japanese-mincho && \
+echo 'install_locale_gen====================' && \
+  aptitude install -y locales && \
+echo 'install_super_visor====================' && \
+  aptitude install -y supervisor && \
 echo 'xvfbのインストール====================' && \
   apt-get install -y xvfb  && \
 echo 'firefoxのインストール====================' && \
@@ -93,12 +61,32 @@ echo 'seleniumのChromeDriver_install====================' && \
   unzip /usr/src/chromedriver_linux64.zip -d /opt/chromedriver_linux64  && \
   chmod +x /opt/chromedriver_linux64/chromedriver
 
+# locale for japanese
+RUN echo '====================locale追加処理====================' && \
+  locale-gen ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+ENV LC_MESSAGES ja_JP.UTF-8
+RUN echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
+  locale-gen && \
+  update-locale LANG=ja_JP.UTF-8
+
+
+# selenium user追加とbrowserのインストール
+RUN echo 'seleniumuserの追加とsudo権限の設定, SSHの設定====================' && \
+  useradd -m -s /bin/bash selenium && \
+  mkdir -p /home/selenium/.ssh && \
+  echo 'selenium:selenium' | chpasswd  && \
+  echo 'selenium ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/selenium && \
+  echo 'Host github.com' >> /home/selenium/.ssh/config && \
+  echo '  StrictHostKeyChecking no' >> /home/selenium/.ssh/config && \
+echo 'change selenium_user shell====================' && \
+  chsh -s /usr/bin/zsh selenium 
+
 # seleniumでinstall rbenv
 USER selenium
-
-
-
-
 
 RUN echo 'install_rbenv====================' && \
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv && \
@@ -139,7 +127,14 @@ echo 'set_[~/.zshrc]====================' && \
   echo '# rbenv'                               >> ~/.zshrc && \
 echo 'rbenvの設定追加====================' && \
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"'  >> ~/.zshrc && \ 
-  echo 'eval "$(rbenv init -)"'                >> ~/.zshrc
+  echo 'eval "$(rbenv init -)"'                >> ~/.zshrc && \
+echo 'locale追加設定====================' && \
+  echo '# locale設定' >> /etc/profile && \
+  echo 'export LANG=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LANGUAGE=ja_JP:ja' >> /etc/profile && \
+  echo 'export LC_ALL=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LC_CTYPE=ja_JP.UTF-8' >> /etc/profile && \
+  echo 'export LC_MESSAGES=ja_JP.UTF-8' >> /etc/profile 
 
 # ssh=22
 EXPOSE 22 80 8080
