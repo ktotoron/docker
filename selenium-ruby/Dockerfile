@@ -111,12 +111,12 @@ echo '==================================================' && \
 USER selenium
 
 RUN echo 'install_antigen_for_zsh====================' && \
-  git clone git@github.com:zsh-users/antigen.git ~/.zsh_ext/antigen.git && \
+  git clone git://github.com/zsh-users/antigen.git ~/.zsh_ext/antigen.git && \
 echo 'set_[~/.zshrc.antigen]====================' && \
   echo '# $HOME/.zshrc.antigen'                            >> ~/.zshrc.antigen && \
   echo '# load antigen'                                    >> ~/.zshrc.antigen && \
   echo 'source ~/.zsh_ext/antigen.git/antigen.zsh'         >> ~/.zshrc.antigen && \
-  echo '# Load the oh-my-zshs library.'                   >> ~/.zshrc.antigen && \
+  echo '# Load the oh-my-zshs library.'                    >> ~/.zshrc.antigen && \
   echo 'antigen use oh-my-zsh'                             >> ~/.zshrc.antigen && \
   echo '# Bundles from the default repo'                   >> ~/.zshrc.antigen && \
   echo 'antigen-bundle git'                                >> ~/.zshrc.antigen && \
